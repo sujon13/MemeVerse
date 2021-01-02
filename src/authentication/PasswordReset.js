@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,14 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import {
-    Link,
     useHistory
 } from 'react-router-dom';
-
-import { hasInternetConnection } from './../util';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -39,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignIn(props) {
+export default function PasswordReset(props) {
     const classes = useStyles();
 
     const history = useHistory();
@@ -48,48 +43,9 @@ export default function SignIn(props) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [user, setUser] = useState({});
-    const [data, setData] = useState({});
+  
 
-    const saveSigninDataToLocalStorage = data => {
-        localStorage.setItem(`token-${data?.profile?.email}`, data?.accessToken);
-    }
-
-    async function handleSubmit(e) {
-        e.preventDefault();
-        if (!hasInternetConnection(true))return;
-        setError('');
-        
-        const baseUrl = `http://localhost:3010/api/v1`;
-        const option = {
-            method: 'post',
-            url: `${baseUrl}/users/signin`,
-            data: {
-                email: email,
-                password: password
-            }
-        };
-
-        setPassword('');
-        setIsLoading(true);
-        try {
-            const response = await axios(option);
-            if (response.data) {
-                console.log(`signin: `, response.data);
-                setData(response.data);
-                setIsLoading(false);
-                saveSigninDataToLocalStorage(response.data);
-                history.push('/home', response.data);
-            }
-        } catch(error) {
-            console.log(error);
-            if(error.response) {
-                setError(error.response.data);
-            }
-            setIsLoading(false);
-        }
-    }
-
+  
     return (
         <Container component="main" maxWidth="xs">
             <Helmet>
@@ -97,9 +53,8 @@ export default function SignIn(props) {
             </Helmet>
             <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar} src='ICON'/>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Reset Password
                 </Typography>
                 <form className={classes.form} autoComplete='off'>
                     <TextField
@@ -119,7 +74,7 @@ export default function SignIn(props) {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="New Password"
                         type="password"
                         id="password"
                         onChange={(e) => setPassword(e.target.value)}
@@ -136,24 +91,11 @@ export default function SignIn(props) {
                         color="primary"
                         className={classes.submit}
                         style={{textTransform: 'none'}}
-                        onClick={handleSubmit}
                     >
                         {   
-                            isLoading ? 'Singing In..' : 'Sign In'
+                            isLoading ? 'Resetting Password..' : 'Reset Password'
                         }
                     </Button>
-                    <Grid container>
-                        <Grid item xs={7} style={{margin: 'auto'}}>
-                            <Link to="/password" variant="body2">
-                                Forgot Password. Click here
-                            </Link>
-                        </Grid>
-                        <Grid item xs={5} style={{margin: 'auto'}}>
-                            <Link to="/signup" variant="body2">
-                                Don't have an account? Sign Up
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </form>
             </div>
         </Container>

@@ -8,7 +8,6 @@ import Dialog from '@material-ui/core/Dialog';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
-import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -141,10 +140,10 @@ export default function CreateMeme(props) {
                         id="outlined-basic"  
                         variant="outlined"
                         size='small'
-                        label='Write short description...(max 80 characters)'
+                        placeholder='Write short description...(max 100 characters)'
                         fullWidth
                         onChange={(e) => {
-                            if (e.target.value.length > 80) {
+                            if (e.target.value.length > 100) {
                                 alert('Please follow the constraint');
                             } else {
                                 setMeme({
@@ -163,12 +162,12 @@ export default function CreateMeme(props) {
                     { selectedImage
                         ? <img 
                             src={selectedImage}  
-                            height='350'
+                            height='300'
                             style={{ 
                                 display: 'block', 
                                 marginLeft: 'auto', 
                                 marginRight: 'auto',
-                                width: '70%'
+                                width: '80%'
                             }}
                         >  
                         </img>

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Signin from './authentication/Signin';
 import SignUp from './authentication/Signup';
 import Newsfeed from './home/Newsfeed';
-//import Profile from './profile/Account';
+import PasswordReset from './authentication/PasswordReset';
 
 import {
     BrowserRouter as Router,
@@ -32,14 +32,14 @@ const App = () => {
                         <SignUp />
                     </Route>
                     <Route path="/" exact>
-                        <SignUp />
+                        <Newsfeed />
                     </Route>
                     <Route path="/home" exact>
                         <Newsfeed/>
                     </Route>
-                    {/* <Route path="/profile">
-                        <Profile/>
-                    </Route> */}
+                    <Route path="/password" exact>
+                        <PasswordReset/>
+                    </Route>
                 </Switch>
             </div>
             

@@ -12,7 +12,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CreateMeme from './ShareMeme';
 
 import {
-    Link,
     useHistory
 } from 'react-router-dom';
 
@@ -40,11 +39,6 @@ export default function NavigationBar(props) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
 
-    const handleProfileClick = () => {
-        console.log('go to profile');
-        history.push('/profile', props.owner);
-    }
-
     const handleLogout = () => {
         console.log('user will logged out');
         localStorage.clear();
@@ -54,69 +48,65 @@ export default function NavigationBar(props) {
     const handleClose = (profile) => {
         console.log('profile', profile);
         setOpen(false);
-        //setProfile(profile);
     };
 
     return (
-        <div className={classes.root}>
-            <AppBar position="static" color='transparent' style={{height: '60px'}}>
-                <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
-                        Meme Verse
-                    </Typography>
-                    {
-                        props.isSignedIn === true
-                            ? <React.Fragment>
-                                <Avatar 
-                                    className={classes.orange}
-                                    onClick = { (e) => setAnchorEl(e.currentTarget) }
-                                >
-                                    {props.user.name[0]}
-                                </Avatar>
-                                <Menu
-                                    id="simple-menu"
-                                    anchorEl={anchorEl}
-                                    keepMounted
-                                    open={Boolean(anchorEl)}
-                                    onClose={() => setAnchorEl(null)}
-                                >
-                                    <MenuItem onClick={ handleProfileClick }>Profile</MenuItem>
-                                    <MenuItem onClick={ handleLogout }>Logout</MenuItem>
-                                </Menu>
-                                <Button 
-                                    style={{textTransform: 'none', marginLeft: '10px'}}
-                                    color='inherit'
-                                    variant='outlined'
-                                    onClick = {() => setOpen(true)}
-                                >
-                                    Upload
-                                </Button>
-                                <CreateMeme user={props.user} open={open} onClose={handleClose} />
-                              </React.Fragment> 
-                            : <React.Fragment>
-                                <Button 
-                                    color='primary'
-                                    style={{textTransform: 'none'}}
-                                    onClick = {() => {
-                                        history.push('/signin');
-                                    }}
-                                >
-                                    Login
-                                </Button>
-                                <Button 
-                                    color='primary'
-                                    style={{textTransform: 'none'}}
-                                    onClick = {() => {
-                                        history.push('/signup');
-                                    }}
-                                >
-                                    Signup
-                                </Button>
-                              </React.Fragment>
+        <AppBar>
+            <Toolbar>
+                <Typography variant="h6" className={classes.title}>
+                    Meme Verse
+                </Typography>
+                {
+                    props.isSignedIn === true
+                        ? <React.Fragment>
+                            <Avatar 
+                                className={classes.orange}
+                                onClick = { (e) => setAnchorEl(e.currentTarget) }
+                            >
+                                {props.user.name[0]}
+                            </Avatar>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={() => setAnchorEl(null)}
+                            >
+                                <MenuItem onClick={ handleLogout }>Logout</MenuItem>
+                            </Menu>
+                            <Button 
+                                style={{textTransform: 'none', marginLeft: '10px'}}
+                                color='inherit'
+                                variant='outlined'
+                                onClick = {() => setOpen(true)}
+                            >
+                                Upload
+                            </Button>
+                            <CreateMeme user={props.user} open={open} onClose={handleClose} />
+                            </React.Fragment> 
+                        : <React.Fragment>
+                            <Button 
+                                color='inherit'
+                                style={{textTransform: 'none'}}
+                                onClick = {() => {
+                                    history.push('/signin');
+                                }}
+                            >
+                                Login
+                            </Button>
+                            <Button 
+                                color='inherit'
+                                style={{textTransform: 'none'}}
+                                onClick = {() => {
+                                    history.push('/signup');
+                                }}
+                            >
+                                Signup
+                            </Button>
+                            </React.Fragment>
 
-                    }
-                </Toolbar>
-            </AppBar>
-        </div>
+                }
+            </Toolbar>
+        </AppBar>
     );
 }

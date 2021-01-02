@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
-import { isEmpty } from 'lodash';
 import {
-    Link,
     useHistory
 } from 'react-router-dom';
 
 import { hasInternetConnection } from '../util';
 import NavigationBar from '../components/NavigationBar';
+import MemeList from './MemeList';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -46,10 +38,7 @@ export default function Newsfeed(props) {
 
     const history = useHistory();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState({});
     const [isSignedIn, setIsSignedIn] = useState(false);
 
@@ -82,27 +71,31 @@ export default function Newsfeed(props) {
         const token = data?.accessToken;
         console.log(`user info: `, user);
         userSignedIn(token);
-        setUser(user);
+        setUser({...user});
     }, []);
-
-    if(isEmpty(user) || user === undefined) {
-        return(
-            <div>
-                <Helmet>
-                    <title> Meme</title>
-                </Helmet>
-                <NavigationBar isSignedIn = {isSignedIn} user = {user}/>
-            </div>
-        );
-    }
 
     return (
         <div>
             <Helmet>
                 <title> Home</title>
             </Helmet>
-            <NavigationBar isSignedIn = {isSignedIn} user = {user}/>
-            HAHA
+            <div 
+                style={{
+                    position: 'absolute', 
+                    top: '0', 
+                    width: '100%', 
+                    overflow: 'hidden'
+                }}
+            >
+                <NavigationBar isSignedIn = {isSignedIn} user = {user}/>
+            </div>
+            <div 
+                style={{
+                    marginTop: '60px', 
+                }}
+            >
+                <MemeList isSignedIn = {isSignedIn}  user={user}/>
+            </div>
         </div>
     );
 }
