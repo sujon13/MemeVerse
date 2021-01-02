@@ -1,6 +1,6 @@
 # MemeVerse #
 It is the frontend of this project.
-I have used material-ui` for ui` design.
+I have used `material-ui` for ui design.
 
 #### Please at first run backend ####
 
